@@ -73,4 +73,26 @@ router.get("/count", async (req, res, next) => {
   }
 });
 
+// Edit a campus based on id
+router.patch("/", async (req, res, next) => {
+  try {
+    const editCampus = {
+      name: req.query.name,
+      address: req.query.address,
+      description: req.query.description,
+      imageUrl: req.query.imageUrl,
+    };
+    const result = await Campuses.update(editCampus, {
+      where: { id: req.query.pk },
+    });
+    // number of affected rows, one in this case
+    // due to primary key
+    result[0]
+      ? res.status(200).send("Campus Successfully Updated")
+      : res.status(404).send("Campus Not Updated");
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

@@ -37,6 +37,8 @@ router.post("/", async (req, res, next) => {
       firstName: req.query.firstName,
       lastName: req.query.lastName,
       email: req.query.email,
+      imageUrl: req.query.imageUrl,
+      gpa: req.query.gpa,
     };
     // returns [new entry object, boolean whether just created or already existed]
     const insert = await Students.upsert(newStudent);
