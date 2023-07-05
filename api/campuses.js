@@ -74,7 +74,7 @@ router.get("/count", async (req, res, next) => {
 });
 
 // Edit a campus based on id
-router.patch("/", async (req, res, next) => {
+router.put("/", async (req, res, next) => {
   try {
     const editCampus = {
       name: req.query.name,
