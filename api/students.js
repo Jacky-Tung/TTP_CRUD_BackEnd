@@ -86,6 +86,30 @@ router.put("/", async (req, res, next) => {
   }
 });
 
+// Remove student from campus by setting campusId to null
+router.put("/remove", async (req, res, next) => {
+  try {
+    const editStudent = {
+      firstName: req.query.firstName,
+      lastName: req.query.lastName,
+      email: req.query.email,
+      imageUrl: req.query.imageUrl,
+      gpa: req.query.gpa,
+      campusId: null,
+    };
+    const result = await Students.update(editStudent, {
+      where: { id: req.query.pk },
+    });
+    // first element is the number of affected rows
+    // one in this case due to primary key as where
+    result[0]
+      ? res.status(200).send("Student Successfully Removed From Campus")
+      : res.status(404).send("Student Not Removed From Campus");
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Fetch total number of students registered
 router.get("/count", async (req, res, next) => {
   try {
