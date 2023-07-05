@@ -63,7 +63,7 @@ router.delete("/", async (req, res, next) => {
 });
 
 // Edit a student based on id
-router.patch("/", async (req, res, next) => {
+router.put("/", async (req, res, next) => {
   try {
     const editStudent = {
       firstName: req.query.firstName,
