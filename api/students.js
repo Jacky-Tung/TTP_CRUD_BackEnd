@@ -110,6 +110,21 @@ router.put("/remove", async (req, res, next) => {
   }
 });
 
+// Adding student to campus
+router.put("/add", async (req, res, next) => {
+  try {
+    const result = await Students.update(
+      { campusId: req.query.campusId },
+      { where: { id: req.query.pk } }
+    );
+    result[0] === 1
+      ? res.status(200).send("Student Successfully Added to Campus")
+      : res.status(404).send("Student Not Added to Campus");
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Fetch total number of students registered
 router.get("/count", async (req, res, next) => {
   try {
