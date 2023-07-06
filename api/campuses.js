@@ -35,12 +35,14 @@ router.get("/single", async (req, res, next) => {
 // Add a new campus
 router.post("/", async (req, res, next) => {
   try {
-    const newCampus = {
+    let newCampus = {
       name: req.query.name,
       address: req.query.address,
       description: req.query.description,
-      imageUrl: req.query.imageUrl,
     };
+
+    if (req.query.imageUrl)
+      newCampus = { ...newCampus, imageUrl: req.query.imageUrl };
     // returns [new entry object, boolean whether just created or already existed]
     const insert = await Campuses.upsert(newCampus);
     res.json(insert[0]);

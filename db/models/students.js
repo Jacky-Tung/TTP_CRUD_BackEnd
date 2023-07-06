@@ -1,6 +1,6 @@
-const {DataTypes} = require('sequelize')
-const db = require('../db')
-const validator = require('validator')
+const { DataTypes } = require("sequelize");
+const db = require("../db");
+const validator = require("validator");
 
 const Students = db.define("students", {
   firstName: {
@@ -24,15 +24,16 @@ const Students = db.define("students", {
   },
   imageUrl: {
     type: DataTypes.STRING,
-    defaultValue: "Default imageUrl",
+    defaultValue:
+      "https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg",
   },
   gpa: {
-    type: DataTypes.DECIMAL(5,1),
+    type: DataTypes.DECIMAL(5, 1),
     validate: {
-        min: 0.0,
-        max: 4.0,
+      min: 0.0,
+      max: 4.0,
     },
   },
 });
 
-module.exports = Students
+module.exports = Students;
