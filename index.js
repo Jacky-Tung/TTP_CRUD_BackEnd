@@ -9,7 +9,7 @@ app.use("/api", require("./api"));
 app.use(bodyParser.json());
 
 // Syncing DB Function
-const syncDB = () => db.sync({ force: true });
+const syncDB = () => db.sync();
 
 // Run server function
 const serverRun = () => {

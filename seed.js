@@ -1,4 +1,5 @@
-const {Campuses, Students} = require('./db/models')
+const { Campuses, Students } = require("./db/models");
+const db = require("./db/db");
 const { faker } = require("@faker-js/faker");
 
 const generateDummyStudents = (count, campusIds) => {
@@ -6,7 +7,10 @@ const generateDummyStudents = (count, campusIds) => {
   for (let i = 0; i < count; i++) {
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();
-    const email = faker.internet.email({firstName: firstName, lastName: lastName});
+    const email = faker.internet.email({
+      firstName: firstName,
+      lastName: lastName,
+    });
     const imageUrl = faker.image.avatar();
     const gpa = faker.number.float({ min: 0.0, max: 4.0 });
     const campusId = getRandomElement(campusIds);
@@ -17,7 +21,7 @@ const generateDummyStudents = (count, campusIds) => {
       email,
       imageUrl,
       gpa,
-      campusId
+      campusId,
     });
   }
   return students;
@@ -46,22 +50,23 @@ const generateDummyCampuses = (count) => {
   return campuses;
 };
 
-const seed = async() => {
-    const seedCampuses = generateDummyCampuses(5);
-    // Seed the campuses
-    const createdCampuses = await Campuses.bulkCreate(seedCampuses, {
+const seed = async () => {
+  await db.sync({ force: true });
+  const seedCampuses = generateDummyCampuses(5);
+  // Seed the campuses
+  const createdCampuses = await Campuses.bulkCreate(seedCampuses, {
     returning: true,
-    });
-    // Get the campus IDs
-    const campusIds = createdCampuses.map((campus) => campus.id);
+  });
+  // Get the campus IDs
+  const campusIds = createdCampuses.map((campus) => campus.id);
 
-    // Generate dummy students with foreign key references
-    const seedStudents = generateDummyStudents(10, campusIds);
-    // Seed the students
-    await Students.bulkCreate(seedStudents);
+  // Generate dummy students with foreign key references
+  const seedStudents = generateDummyStudents(10, campusIds);
+  // Seed the students
+  await Students.bulkCreate(seedStudents);
 
-    process.exit()
-}
+  process.exit();
+};
 
 seed().catch((error) => {
   console.error("Seeding error:", error);
