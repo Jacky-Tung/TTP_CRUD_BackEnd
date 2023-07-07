@@ -8,4 +8,5 @@ const db = new Sequelize(`${process.env.POSTGRES_URL}?sslmode=require`, {
   dialect: require("pg"),
 });
 
+console.log(process.env.POSTGRES_URL);
 module.exports = db;
