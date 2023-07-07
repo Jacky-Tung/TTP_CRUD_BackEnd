@@ -2,7 +2,6 @@ const express = require('express')
 const db = require('./db')
 const bodyParser = require('body-parser')
 const app = express()
-const PORT = 8080
 
 // Mount on API 
 app.use('/api', require('./api'))
@@ -13,7 +12,7 @@ const syncDB = () => db.sync({ force: true });
 
 // Run server function
 const serverRun = () => {
-    app.listen(PORT, () => {
+    app.listen(process.env.PORT, () => {
         console.log(`Live on port: http://localhost:${PORT}/`);
     })
 }
